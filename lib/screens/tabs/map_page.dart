@@ -15,14 +15,17 @@ class _MapPageState extends State<MapPage> {
       Completer<GoogleMapController>();
 
   static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
+    target: LatLng(8.4803, 124.6498),
     zoom: 14.4746,
   );
 
   @override
   Widget build(BuildContext context) {
     return GoogleMap(
-      mapType: MapType.hybrid,
+      myLocationEnabled: true,
+      myLocationButtonEnabled: true,
+      buildingsEnabled: true,
+      mapType: MapType.normal,
       initialCameraPosition: _kGooglePlex,
       onMapCreated: (GoogleMapController controller) {
         _controller.complete(controller);
