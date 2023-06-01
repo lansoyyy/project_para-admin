@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:project_para_admin/utils/colors.dart';
+import 'package:project_para_admin/widgets/button_widget.dart';
+
+import '../home_screen.dart';
 
 class MapPage extends StatefulWidget {
   const MapPage({super.key});
@@ -36,23 +39,50 @@ class _MapPageState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
     return hasLoaded
-        ? GoogleMap(
-            mapToolbarEnabled: false,
-            zoomControlsEnabled: false,
-            buildingsEnabled: true,
-            compassEnabled: true,
-            myLocationButtonEnabled: true,
-            myLocationEnabled: true,
-            markers: markers,
-            mapType: MapType.normal,
-            initialCameraPosition: _kGooglePlex,
-            onMapCreated: (GoogleMapController controller) {
-              _controller.complete(controller);
+        ? Stack(
+            children: [
+              GoogleMap(
+                mapToolbarEnabled: false,
+                zoomControlsEnabled: false,
+                buildingsEnabled: true,
+                compassEnabled: true,
+                myLocationButtonEnabled: true,
+                myLocationEnabled: true,
+                markers: markers,
+                mapType: MapType.normal,
+                initialCameraPosition: _kGooglePlex,
+                onMapCreated: (GoogleMapController controller) {
+                  _controller.complete(controller);
 
-              setState(() {
-                mapController = controller;
-              });
-            },
+                  setState(() {
+                    mapController = controller;
+                  });
+                },
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Center(
+                    child: ButtonWidget(
+                      height: 35,
+                      width: 150,
+                      fontSize: 12,
+                      opacity: 1,
+                      color: Colors.green,
+                      label: 'Refresh',
+                      onPressed: () {
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => const HomeScreen()));
+                      },
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ],
+              ),
+            ],
           )
         : const Center(
             child: SpinKitPulse(

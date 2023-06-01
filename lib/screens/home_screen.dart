@@ -51,11 +51,11 @@ class _HomeScreenState extends State<HomeScreen> {
               label: 'Map'),
           BottomNavigationBarItem(
               icon: Icon(
-                Icons.account_circle_outlined,
+                Icons.book_online,
                 color: Colors.white,
               ),
               backgroundColor: grey,
-              label: 'Drivers'),
+              label: 'Bookings'),
           BottomNavigationBarItem(
               icon: Icon(
                 Icons.delivery_dining_outlined,
