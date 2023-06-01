@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project_para_admin/widgets/text_widget.dart';
-
+import 'package:url_launcher/url_launcher.dart';
+import 'package:intl/intl.dart' show DateFormat, toBeginningOfSentenceCase;
 import '../../utils/colors.dart';
 
 class DriversPage extends StatefulWidget {
@@ -18,6 +19,10 @@ class _DriversPageState extends State<DriversPage> {
   int day = DateTime.now().day;
   int month = DateTime.now().month;
   int year = DateTime.now().year;
+
+  DateTime startDate =
+      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -91,9 +96,10 @@ class _DriversPageState extends State<DriversPage> {
 
                   if (selectedDate != null) {
                     setState(() {
-                      day = selectedDate.day;
-                      month = selectedDate.month;
-                      year = selectedDate.year;
+                      // day = selectedDate.day;
+                      // month = selectedDate.month;
+                      // year = selectedDate.year;
+                      startDate = selectedDate;
                     });
                   }
                 },
@@ -106,9 +112,22 @@ class _DriversPageState extends State<DriversPage> {
           const SizedBox(
             height: 20,
           ),
+          TextBold(
+              text: 'Bookings for: ${DateFormat.yMMMMd().format(startDate)}',
+              fontSize: 14,
+              color: Colors.black),
+          const SizedBox(
+            height: 5,
+          ),
           StreamBuilder<QuerySnapshot>(
-              stream:
-                  FirebaseFirestore.instance.collection('Drivers').snapshots(),
+              stream: FirebaseFirestore.instance
+                  .collection('Drivers')
+                  .where('name',
+                      isGreaterThanOrEqualTo: toBeginningOfSentenceCase(filter))
+                  .where('name',
+                      isLessThan: '${toBeginningOfSentenceCase(filter)}z')
+                  // .where('dateTime', isLessThan: date)
+                  .snapshots(),
               builder: (BuildContext context,
                   AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (snapshot.hasError) {
@@ -126,6 +145,7 @@ class _DriversPageState extends State<DriversPage> {
                 }
 
                 final data = snapshot.requireData;
+
                 return Expanded(
                   child: SizedBox(
                     child: ListView.builder(
@@ -150,16 +170,53 @@ class _DriversPageState extends State<DriversPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   TextRegular(
-                                      text: data.docs[index]['vehicle'],
+                                      text: data.docs[index]['vehicle'] +
+                                          ' - ' +
+                                          data.docs[index]['plateNumber'],
                                       fontSize: 11,
                                       color: Colors.grey),
                                   const SizedBox(
                                     height: 5,
                                   ),
-                                  TextBold(
-                                      text: '0 Bookings',
-                                      fontSize: 12,
-                                      color: Colors.green),
+                                  StreamBuilder<QuerySnapshot>(
+                                      stream: FirebaseFirestore.instance
+                                          .collection('Bookings')
+                                          .where('driverId',
+                                              isEqualTo: data.docs[index].id)
+                                          .where('dateTime',
+                                              isGreaterThanOrEqualTo: startDate)
+                                          .where('dateTime',
+                                              isLessThan: startDate
+                                                  .add(const Duration(days: 1)))
+                                          .snapshots(),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<QuerySnapshot>
+                                              snapshot) {
+                                        if (snapshot.hasError) {
+                                          print(snapshot.error);
+                                          return const Center(
+                                              child: Text('Error'));
+                                        }
+                                        if (snapshot.connectionState ==
+                                            ConnectionState.waiting) {
+                                          return const Padding(
+                                            padding: EdgeInsets.only(top: 50),
+                                            child: Center(
+                                                child:
+                                                    CircularProgressIndicator(
+                                              color: Colors.black,
+                                            )),
+                                          );
+                                        }
+
+                                        final data12 = snapshot.requireData;
+
+                                        return TextBold(
+                                            text:
+                                                '${data12.docs.length} Bookings',
+                                            fontSize: 12,
+                                            color: Colors.green);
+                                      }),
                                 ],
                               ),
                               trailing: SizedBox(
@@ -174,7 +231,13 @@ class _DriversPageState extends State<DriversPage> {
                                           : Colors.red,
                                     ),
                                     IconButton(
-                                      onPressed: () {},
+                                      onPressed: () async {
+                                        var text =
+                                            'tel:${data.docs[index]['number']}';
+                                        if (await canLaunch(text)) {
+                                          await launch(text);
+                                        }
+                                      },
                                       icon: const Icon(
                                         Icons.phone,
                                       ),
