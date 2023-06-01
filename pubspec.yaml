@@ -61,6 +61,7 @@ dependencies:
   location: ^4.4.0
   custom_map_markers:
   flutter_spinkit:
+  url_launcher:
 
 
 dev_dependencies:
