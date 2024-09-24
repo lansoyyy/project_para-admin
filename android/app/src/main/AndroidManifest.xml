@@ -25,7 +25,7 @@
     </intent>
     </queries>
    <application
-        android:label="PARA - ADMIN"
+        android:label="Pasada - Admin"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
