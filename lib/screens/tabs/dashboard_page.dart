@@ -69,15 +69,15 @@ class _DashboardPageState extends State<DashboardPage> {
                           const SizedBox(
                             height: 10,
                           ),
-                          SfCartesianChart(
-                              primaryXAxis: CategoryAxis(),
-                              series: <ChartSeries<ChartData, String>>[
-                                // Renders column chart
-                                ColumnSeries<ChartData, String>(
-                                    dataSource: chartData,
-                                    xValueMapper: (ChartData data, _) => data.x,
-                                    yValueMapper: (ChartData data, _) => data.y)
-                              ]),
+                          // SfCartesianChart(
+                          //     primaryXAxis: CategoryAxis(),
+                          //     series: <ChartSeries<ChartData, String>>[
+                          //       // Renders column chart
+                          //       ColumnSeries<ChartData, String>(
+                          //           dataSource: chartData,
+                          //           xValueMapper: (ChartData data, _) => data.x,
+                          //           yValueMapper: (ChartData data, _) => data.y)
+                          //     ]),
                           const SizedBox(
                             height: 10,
                           ),
@@ -106,7 +106,6 @@ class _DashboardPageState extends State<DashboardPage> {
                                   'Pending': pendings,
                                 },
                                 chartType: pie.ChartType.disc,
-                                baseChartColor: Colors.grey[300]!,
                                 colorList: const [
                                   Colors.blue,
                                   Colors.red,
