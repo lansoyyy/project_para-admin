@@ -20,10 +20,10 @@ class _SplashToHomeScreenState extends State<SplashToHomeScreen> {
     // TODO: implement initState
     super.initState();
 
-    // Timer(const Duration(seconds: 5), () async {
-    //   Navigator.of(context).pushReplacement(
-    //       MaterialPageRoute(builder: (context) => const HomeScreen()));
-    // });
+    Timer(const Duration(seconds: 5), () async {
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const HomeScreen()));
+    });
   }
 
   @override
