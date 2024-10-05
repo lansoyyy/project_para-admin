@@ -170,9 +170,10 @@ class _DriversPageState extends State<DriversPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   TextRegular(
-                                      text: data.docs[index]['vehicle'] +
-                                          ' - ' +
-                                          data.docs[index]['plateNumber'],
+                                      text:
+                                          '${data.docs[index]['vehicle'] ?? ''}'
+                                                  ' - ' +
+                                              data.docs[index]['plateNumber'],
                                       fontSize: 11,
                                       color: Colors.grey),
                                   const SizedBox(
