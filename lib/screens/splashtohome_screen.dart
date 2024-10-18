@@ -42,7 +42,7 @@ class _SplashToHomeScreenState extends State<SplashToHomeScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TextBold(text: 'Loading. . .', fontSize: 18, color: Colors.black),
+              TextBold(text: 'Loading. . .', fontSize: 18, color: Colors.white),
               // Image.asset(
               //   'assets/images/animation.gif',
               //   width: 250,

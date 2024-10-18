@@ -20,7 +20,8 @@ class _HomeScreenState extends State<HomeScreen> {
     const DashboardPage(),
     const MapPage(),
     const DriversPage(),
-    const DeliveryPage()
+    const DeliveryPage(),
+    const SizedBox(),
   ];
 
   @override
@@ -63,6 +64,13 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               backgroundColor: grey,
               label: 'Delivery'),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.drive_eta_sharp,
+                color: Colors.white,
+              ),
+              backgroundColor: grey,
+              label: 'Drivers'),
         ],
         onTap: (index) {
           setState(() {
