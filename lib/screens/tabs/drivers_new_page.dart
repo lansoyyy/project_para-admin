@@ -92,10 +92,10 @@ class _DeliveryNewPageState extends State<DeliveryNewPage> {
               stream: FirebaseFirestore.instance
                   .collection('Drivers')
                   .where('isVerified', isEqualTo: false)
-                  .where('name',
-                      isGreaterThanOrEqualTo: toBeginningOfSentenceCase(filter))
-                  .where('name',
-                      isLessThan: '${toBeginningOfSentenceCase(filter)}z')
+                  // .where('name',
+                  //     isGreaterThanOrEqualTo: toBeginningOfSentenceCase(filter))
+                  // .where('name',
+                  //     isLessThan: '${toBeginningOfSentenceCase(filter)}z')
                   // .where('dateTime', isLessThan: date)
                   .snapshots(),
               builder: (BuildContext context,

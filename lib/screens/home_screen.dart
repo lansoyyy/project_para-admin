@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_para_admin/screens/tabs/dashboard_page.dart';
 import 'package:project_para_admin/screens/tabs/delivery_page.dart';
+import 'package:project_para_admin/screens/tabs/drivers_new_page.dart';
 import 'package:project_para_admin/screens/tabs/drivers_page.dart';
 import 'package:project_para_admin/screens/tabs/map_page.dart';
 import 'package:project_para_admin/utils/colors.dart';
@@ -21,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
     const MapPage(),
     const DriversPage(),
     const DeliveryPage(),
-    const SizedBox(),
+    const DeliveryNewPage(),
   ];
 
   @override
